@@ -3,6 +3,7 @@ package com.examples.myfirstcomposeapplication.composables
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.unit.dp
 import kotlin.math.max
 
 @Composable
@@ -43,7 +44,7 @@ fun StaggeredGrid(
         layout(gridWidth, gridHeight) {
             // track the x coord we have placed items in a particular row
             val rowX = IntArray(rows) { index ->
-                if (index.isEven()) 0 else 32
+                if (index.isEven()) 0 else 16.dp.toIntPx()
             }
 
             placeables.forEachIndexed { index, placeable ->
