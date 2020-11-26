@@ -3,12 +3,12 @@ package com.examples.myfirstcomposeapplication
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.ScrollableRow
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.preferredHeight
 import androidx.compose.foundation.layout.preferredSize
@@ -53,7 +53,10 @@ import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
+import com.examples.myfirstcomposeapplication.composables.Chip
+import com.examples.myfirstcomposeapplication.composables.StaggeredGrid
 import com.examples.myfirstcomposeapplication.composables.StandardSpacing
+import com.examples.myfirstcomposeapplication.composables.topics
 import com.examples.myfirstcomposeapplication.ui.MyFirstComposeApplicationTheme
 import kotlinx.coroutines.launch
 
@@ -119,7 +122,7 @@ fun MainScreen(onFavoriteIconClick: () -> Unit) {
             }
         },
         bodyContent = { innerPadding ->
-            BodyContent(Modifier.padding(innerPadding), scaffoldState)
+            BodyContent(Modifier, scaffoldState)
         },
         bottomBar = {
             BottomNavigationSample()
@@ -146,21 +149,21 @@ fun AppTopBar(onNavigationIconClick: () -> Unit, onFavoriteIconClick: () -> Unit
 
 @Composable
 fun BodyContent(modifier: Modifier = Modifier, scaffoldState: ScaffoldState) {
-//    Column(Modifier.fillMaxHeight(), verticalArrangement = Arrangement.Bottom) {
     Column(
-//            modifier = Modifier.weight(1f).padding(16.dp),
-        modifier = Modifier.fillMaxHeight().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ProfileCard(modifier)
         Text(text = if (scaffoldState.drawerState.isClosed) ">>> Swipe >>>" else "<<< Swipe <<<")
-        Spacer(Modifier.preferredHeight(20.dp))
         Button(onClick = { scaffoldState.drawerState.open() }) {
             Text("Click to open")
         }
+        Spacer(Modifier.preferredHeight(16.dp))
+        ScrollableRow(modifier = modifier) {
+            StaggeredGrid(rows = 3) {
+                topics.forEach { Chip(modifier = Modifier.padding(8.dp), text = it) }
+            }
+        }
     }
-//        BottomNavigationSample()
-//    }
 }
 
 @Composable
@@ -180,6 +183,7 @@ fun BottomNavigationSample() {
     }
 }
 
+@Preview
 @Composable
 fun ProfileCard(modifier: Modifier = Modifier) {
     Row(

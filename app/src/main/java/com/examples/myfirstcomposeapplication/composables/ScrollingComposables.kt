@@ -5,12 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Stack
 import androidx.compose.foundation.layout.preferredSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,7 +24,8 @@ fun TestingScroll() {
             repeat(1000) { index ->
                 Box(
                     Modifier.preferredSize(64.dp).background(MaterialTheme.colors.background),
-                    alignment = Alignment.Center) {
+                    alignment = Alignment.Center
+                ) {
                     Text(index.toString())
                 }
             }
